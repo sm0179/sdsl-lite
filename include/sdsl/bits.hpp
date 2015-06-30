@@ -249,10 +249,12 @@ inline uint64_t bits::cnt(uint64_t x)
            lt_cnt[(x>>32)&0xFFULL] + lt_cnt[(x>>40)&0xFFULL] +
            lt_cnt[(x>>48)&0xFFULL] + lt_cnt[(x>>56)&0xFFULL];
 #else
-    x = x-((x>>1) & 0x5555555555555555ull);
-    x = (x & 0x3333333333333333ull) + ((x >> 2) & 0x3333333333333333ull);
-    x = (x + (x >> 4)) & 0x0f0f0f0f0f0f0f0full;
-    return (0x0101010101010101ull*x >> 56);
+    //    x = x-((x>>1) & 0x5555555555555555ull);
+    // x = (x & 0x3333333333333333ull) + ((x >> 2) & 0x3333333333333333ull);
+    // x = (x + (x >> 4)) & 0x0f0f0f0f0f0f0f0full;
+    // return (0x0101010101010101ull*x >> 56);
+    // jerome modif: comment out last 4 lines & return builtin_popcountll
+    return __builtin_popcountll(x);
 #endif
 #endif
 }
